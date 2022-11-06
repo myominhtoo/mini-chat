@@ -16,8 +16,8 @@ public class AppException {
     public ResponseEntity<Response<?>> duplicateEmailException(DuplicateEmailException e ){
         Response response = new Response(
                 LocalDate.now(),
-                HttpStatus.BAD_REQUEST,
-                HttpStatus.BAD_REQUEST.value(),
+                HttpStatus.ALREADY_REPORTED,
+                HttpStatus.ALREADY_REPORTED.value(),
                 e.getMessage(),
                 false,
                 null

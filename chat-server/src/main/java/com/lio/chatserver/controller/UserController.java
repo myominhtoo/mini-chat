@@ -14,6 +14,7 @@ import java.time.LocalDate;
 
 @RestController
 @RequestMapping( value = "/api/v1" )
+@CrossOrigin( originPatterns = "*" )
 public class UserController extends AppException {
     private UserService userService;
 
