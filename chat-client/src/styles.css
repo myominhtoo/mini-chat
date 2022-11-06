@@ -1,5 +1,7 @@
 :root{
     --pale-white:#eee;
+    --snow:#fff;
+    --pale-dk:rgba(0,0,0,0.45);
 }
 
 body{
@@ -21,4 +23,31 @@ body{
 input:focus{
     outline:none !important;
     border:none !important;
+}
+
+#chat-container{
+    background:var(--snow);
+    height:65vh;
+    max-height:65vh;
+    overflow-y:scroll;
+}
+
+#chat-container::-webkit-scrollbar {
+    display:none;
+    width: 3px;
+    height:5px;
+}
+
+#chat-container::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+#chat-container::-webkit-scrollbar-thumb {
+    background-color: var(--pale-dk);
+    outline: 1px solid slategrey;
+}
+
+#main{
+    width:600px;
+    min-width:500px;
 }
