@@ -1,0 +1,24 @@
+:root{
+    --pale-white:#eee;
+}
+
+body{
+    background:var(--pale-white);
+}
+
+#App{
+    height:100vh;
+    max-height:100vh;
+    display:flex;
+    justify-content: center;
+    align-items:center;
+}
+
+.card{
+    min-width:450px;
+}
+
+input:focus{
+    outline:none !important;
+    border:none !important;
+}
