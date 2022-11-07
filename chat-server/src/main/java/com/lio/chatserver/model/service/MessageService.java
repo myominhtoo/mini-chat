@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service("messageService")
 public class MessageService {
@@ -20,6 +21,10 @@ public class MessageService {
     public Message saveMesage( Message message ){
         message.setSentDate(LocalDateTime.now());
         return this.messageRepo.save(message);
+    }
+
+    public List<Message> getMessages(){
+        return this.messageRepo.findAll();
     }
 
 }
