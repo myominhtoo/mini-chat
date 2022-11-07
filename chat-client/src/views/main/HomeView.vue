@@ -1,5 +1,5 @@
 <script setup >
-import {ref, reactive, onMounted} from 'vue';
+import {ref, reactive, onMounted, onUpdated} from 'vue';
 import ChatContainer from '@/components/ChatContainer.vue';
 import MessageSendBox from "@/components/MessageSendBox.vue";
 import Loading from '@/components/Loading.vue';
@@ -24,13 +24,16 @@ import {useRouter} from "vue-router";
   const handleSend = ( msg ) => {
       msg.user = { id : user.id };
       stompClient.send( '/app/send-message' , {} , JSON.stringify(msg) );
+      setTimeout(() => {
+         moveScrollToBotton();
+      } , 100 );
   }
 
   const fetchMessages =  async () => {
     status.isFetchingMessages = true;
     await axios.get( 'http://localhost:8080/api/v1/messages' )
     .then( res => {
-     status.isFetchingMessages = false;
+      status.isFetchingMessages = false;
       if(res.status == 200){
         messages.value = res.data;
       }
@@ -74,6 +77,14 @@ import {useRouter} from "vue-router";
     stompClient.connect( {} , whenConnected, whenError );
   }
 
+  const moveScrollToBotton = () => {
+    const chatContainer = document.getElementById('chat-container');
+    chatContainer.scrollTo({
+     top : chatContainer.scrollHeight + 100,
+     behavior : 'smooth'
+    })
+  }
+
   onMounted( () => {
     if( ! isAuth() ){
      router.push( '/login?msg=Please log in to continue!' );
@@ -83,6 +94,12 @@ import {useRouter} from "vue-router";
     connectToSocket();
     sendNotiRef.value.src = sendNotiUrl;
   });
+
+  onUpdated(() => {
+    setTimeout(() => {
+     moveScrollToBotton();
+    } , 100 )
+  })
 
 </script>
 

@@ -36,6 +36,7 @@ input:focus{
     display:none;
     width: 3px;
     height:5px;
+    scroll-behavior: smooth;
 }
 
 #chat-container::-webkit-scrollbar-track {
