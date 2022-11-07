@@ -1,4 +1,5 @@
 <script setup  >
+ import Message from "@/components/Message.vue";
 
  const props  = defineProps({
   messages : {
@@ -11,8 +12,6 @@
 
 <template>
   <div class="w-100 p-2 card-body" id="chat-container" >
-    <small>
-
-    </small>
+    <Message v-for="message of messages" :message="message" />
   </div>
 </template>

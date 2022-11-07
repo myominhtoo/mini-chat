@@ -1,6 +1,6 @@
 <script setup >
 
-  const emits = defineEmits([ 'send-msg' ])
+  const emits = defineEmits([ 'send-msg' ]);
 
   const  handleSendMessage = ( e ) => {
       e.preventDefault();

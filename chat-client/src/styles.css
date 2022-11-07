@@ -51,3 +51,8 @@ input:focus{
     width:600px;
     min-width:500px;
 }
+
+#loading{
+    height:65vh;
+    max-height:65vh;
+}
