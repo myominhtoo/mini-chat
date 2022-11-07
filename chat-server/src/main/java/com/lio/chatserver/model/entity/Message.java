@@ -25,7 +25,7 @@ public class Message {
   @OneToOne
   private User user;
 
-  @JsonFormat( pattern = "yyyy-MM-dd hh:mm:ss" )
+  @JsonFormat( pattern = "yyyy-MM-dd HH:mm:ss" )
   private LocalDateTime sentDate;
   
 }

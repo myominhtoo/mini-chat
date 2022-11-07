@@ -56,3 +56,26 @@ input:focus{
     height:65vh;
     max-height:65vh;
 }
+
+
+#message-container #body{
+    display: flex;
+    justify-content:flex-start;
+    align-items:flex-end;
+}
+
+#message-container #icon{
+    width:30px;
+    height:30px;
+    border-radius:100%;
+    background:red;
+    display:flex;
+    justify-content: center;
+    align-items:center;
+}
+
+#message-container #message{
+    padding:5px 15px;
+    border-radius:3px 10px 7px 4px;
+    background:var(--pale-white);
+}

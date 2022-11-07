@@ -13,16 +13,14 @@ import org.springframework.stereotype.Controller;
 public class ChatController {
 
     private MessageService messageService;
-    private SimpMessagingTemplate simpMessagingTemplate;
 
     @Autowired
-    public ChatController( MessageService messageService , SimpMessagingTemplate simpMessagingTemplate ){
+    public ChatController( MessageService messageService ){
         this.messageService = messageService;
-        this.simpMessagingTemplate = simpMessagingTemplate;
     }
 
     @MessageMapping( value = "/send-message" )
-    @SendTo( "/messages" )
+    @SendTo( "/chat/messages" )
     public Message sendMessage( @Payload Message message  ){
        return this.messageService.saveMesage(message);
     }
