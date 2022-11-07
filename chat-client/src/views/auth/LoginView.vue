@@ -3,38 +3,40 @@ import { reactive } from "vue";
 import axios from "axios";
 import swal from "sweetalert";
 import {useRouter} from "vue-router";
+import { saveUser } from '@/util/auth.store';
 
-const user = reactive({
- email : '',
- password : ''
-});
+  const user = reactive({
+   email : '',
+   password : ''
+  });
 
-const status = reactive({
- error : '',
- isLoading : false,
-});
+  const status = reactive({
+   error : '',
+   isLoading : false,
+  });
 
-const router = useRouter();
+  const router = useRouter();
 
-const handleUserLogin = async ( e ) => {
-      e.preventDefault();
-      status.error = '';
-      status.isLoading = true;
-      await axios.get(`http://localhost:8080/api/v1/users?email=${user.email}`)
-      .then( res => {
-        status.isLoading = false;
-        if( res.data && res.data.password === user.password  ){
-          swal({
-           text : 'Successfully Logged In!',
-           icon : 'success'
-          }).then( () => {
-            router.push(  '/?success=true' );
-          });
-        }else{
-          status.error = "Invalid email or password!"
-        }
-      });
-}
+  const handleUserLogin = async ( e ) => {
+        e.preventDefault();
+        status.error = '';
+        status.isLoading = true;
+        await axios.get(`http://localhost:8080/api/v1/users?email=${user.email}`)
+        .then( res => {
+          status.isLoading = false;
+          if( res.data && res.data.password === user.password  ){
+            swal({
+             text : 'Successfully Logged In!',
+             icon : 'success'
+            }).then( () => {
+              router.push(  '/?success=true' );
+              saveUser( res.data );
+            });
+          }else{
+            status.error = "Invalid email or password!"
+          }
+        });
+  }
 
 </script>
 

@@ -65,8 +65,8 @@ input:focus{
 }
 
 #message-container #icon{
-    width:30px;
-    height:30px;
+    width:35px;
+    height:35px;
     border-radius:100%;
     background:red;
     display:flex;

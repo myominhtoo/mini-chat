@@ -7,6 +7,8 @@ import axios from 'axios';
 import SockJs from 'sockjs-client/dist/sockjs.min.js';
 import { over } from 'stompjs';
 import sendNotiUrl from '@/assets/msg-noti.mp3';
+import { isAuth, removeUser , userStore } from '@/util/auth.store';
+import {useRouter} from "vue-router";
 
   const messages = ref([]);
   const status = reactive({
@@ -16,9 +18,11 @@ import sendNotiUrl from '@/assets/msg-noti.mp3';
   const sendNotiRef = ref(null);
 
   let stompClient = null;
+  const router = useRouter();
+  const user = userStore();
 
   const handleSend = ( msg ) => {
-      msg.user = { id : 1 };
+      msg.user = { id : user.id };
       stompClient.send( '/app/send-message' , {} , JSON.stringify(msg) );
   }
 
@@ -28,8 +32,20 @@ import sendNotiUrl from '@/assets/msg-noti.mp3';
     .then( res => {
      status.isFetchingMessages = false;
       if(res.status == 200){
-        console.log(res.data);
         messages.value = res.data;
+      }
+    });
+  }
+
+  const handleLogout = () => {
+    swal({
+     text : 'Are you sure to logout!',
+     icon : 'warning',
+     buttons : [ 'No' , 'Yes']
+    }).then( isYes => {
+      if(isYes){
+        removeUser();
+        router.push('/login?success=true');
       }
     });
   }
@@ -44,7 +60,7 @@ import sendNotiUrl from '@/assets/msg-noti.mp3';
 
   const whenMessageReceived = ( payload ) => {
     const newMessage = JSON.parse(payload.body);
-    sendNotiRef.value.play();
+    if( newMessage.user.id != user.id ) sendNotiRef.value.play();
     messages.value.push(newMessage);
   }
 
@@ -59,6 +75,10 @@ import sendNotiUrl from '@/assets/msg-noti.mp3';
   }
 
   onMounted( () => {
+    if( ! isAuth() ){
+     router.push( '/login?msg=Please log in to continue!' );
+     return;
+    }
     fetchMessages();
     connectToSocket();
     sendNotiRef.value.src = sendNotiUrl;
@@ -68,8 +88,9 @@ import sendNotiUrl from '@/assets/msg-noti.mp3';
 
 <template>
   <main id="main" class="card shadow-sm p-3" >
-    <header class="card-header my-2 ">
-      <h4 class="text-start">Chat App</h4>
+    <header class="card-header my-2 d-flex justify-content-between">
+      <h4 class="text-start text-muted">Chat App</h4>
+      <button @click="handleLogout()"  class="btn btn-sm btn-danger outline-none border-none">Logout</button>
     </header>
     <audio class="d-none" ref="sendNotiRef" controls ></audio>
     <Loading :show="status.isFetchingMessages" />

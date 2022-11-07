@@ -11,6 +11,7 @@ import { reactive } from "vue";
   const  handleSendMessage = ( e ) => {
       e.preventDefault();
       emits('send-msg', message );
+      message.text = '';
   }
 
 </script>
